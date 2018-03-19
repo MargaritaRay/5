@@ -1,6 +1,4 @@
 <?php
-var_dump($_FILES);
-
 class Uploader
 {
     public $formName;
@@ -9,23 +7,24 @@ class Uploader
     {
         $this->formName = $formName;
     }
-
     function isUploaded()
     {
-        is_uploaded_file($_FILES[$this->formName]);
-        return $this;
+        if(!empty($_FILES[$this->formName]) && $_FILES[$this->formName]['error'] == 0){
+            return is_uploaded_file($_FILES[$this->formName]['tmp_name']);
+        }
     }
-
     function upload()
     {
-        if ($this->isUploaded()) {
-            move_uploaded_file( $_FILES['tmp_name'], __DIR__ . "/file" );
+        if($this->isUploaded()){
+            move_uploaded_file( $_FILES[$this->formName]['tmp_name'], "/file/" );
         }
 
     }
 }
 
-$upFile = new Uploader('newimg');
+$upFile = new Uploader("newfile");
+$upFile->isUploaded();
+$upFile->upload();
 
 
 
