@@ -1,8 +1,7 @@
 <?php
-class GuestBook
+class TextFile
 {
     protected $data;
-    public $way;
 
     function __construct($way)
     {
@@ -15,18 +14,24 @@ class GuestBook
     public function getData()
     {
         //возвращает массив записей (содержимое файла)
-       return  $this->data;
+        return  $this->data;
     }
 
     public function append($text)
     {
-        //добавление элимента в конец массива (содержимое файла, элемент)
-         array_push($this->data,  $text);
+        //добавление элемент в конец массива (содержимое файла, элемент)
+        array_push($this->data,  $text);
     }
+
+}
+
+
+class GuestBook extends TextFile
+{
+    public $way;
 
     public function  save()
     {
-        //запись в файл
         file_put_contents($this->way, $this->data);
 
     }
